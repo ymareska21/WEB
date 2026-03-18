@@ -1,46 +1,33 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 
 const PATIENTS = [
   {
     id: 'emma-rodriguez',
     name: 'Emma Rodriguez',
     initials: 'ER',
-    status: 'Excellent',
-    lastVisit: 'PT: 2025-08-01',
-    compliance: '95%',
+    patientId: 'PT-20206-001',
+    compliance: 75,
   },
   {
     id: 'john-data-chu',
-    name: 'John Data Chu',
+    name: 'Juan Dela Cruz',
     initials: 'JD',
-    status: 'Good',
-    lastVisit: 'PT: 7 days ago',
-    compliance: '88%',
+    patientId: 'PT-20206-002',
+    compliance: 75,
+  },
+  {
+    id: 'daniel-padilla',
+    name: 'Daniel Padilla',
+    initials: 'DP',
+    patientId: 'PT-20206-003',
+    compliance: 75,
   },
   {
     id: 'kathryn-bernardo',
     name: 'Kathryn Bernardo',
     initials: 'KB',
-    status: 'Good',
-    lastVisit: 'PT: 10 days ago',
-    compliance: '92%',
-  },
-  {
-    id: 'miguel-santos',
-    name: 'Miguel Santos',
-    initials: 'MS',
-    status: 'Fair',
-    lastVisit: 'PT: 14 days ago',
-    compliance: '75%',
-  },
-  {
-    id: 'patricia-santos',
-    name: 'Patricia Santos',
-    initials: 'PS',
-    status: 'Good',
-    lastVisit: 'PT: 3 days ago',
-    compliance: '89%',
+    patientId: 'PT-20206-004',
+    compliance: 75,
   },
 ];
 
@@ -56,15 +43,15 @@ export default function PatientList({ selectedId, onSelectPatient, searchTerm }:
   );
 
   return (
-    <div className="divide-y divide-border">
+    <div className="space-y-3 p-4">
       {filteredPatients.map((patient) => (
         <button
           key={patient.id}
           onClick={() => onSelectPatient(patient.id)}
-          className={`w-full p-4 text-left transition-colors ${
+          className={`w-full p-4 text-left transition-all rounded-xl border shadow-sm ${
             selectedId === patient.id
-              ? 'bg-accent/10 border-l-2 border-accent'
-              : 'hover:bg-muted'
+              ? 'bg-accent/10 border-accent'
+              : 'bg-white border-border hover:border-accent/50 hover:shadow-md'
           }`}
         >
           <div className="flex items-start gap-3">
@@ -78,15 +65,24 @@ export default function PatientList({ selectedId, onSelectPatient, searchTerm }:
                 {patient.name}
               </p>
               <p className="text-xs text-muted-foreground truncate mt-0.5">
-                {patient.lastVisit}
+                ID: {patient.patientId}
               </p>
-              <div className="flex items-center gap-2 mt-2">
-                <Badge 
-                  variant="secondary"
-                  className="text-xs bg-muted text-muted-foreground"
-                >
-                  {patient.compliance}
-                </Badge>
+
+              <div className="mt-3">
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span className="truncate">20-20-20 Compliance</span>
+                  <span className="font-semibold text-[11px] text-foreground">
+                    {patient.compliance}%
+                  </span>
+                </div>
+                <div className="mt-1 h-2 w-full rounded-full bg-muted/40 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all ${
+                      selectedId === patient.id ? 'bg-accent' : 'bg-muted'
+                    }`}
+                    style={{ width: `${patient.compliance}%` }}
+                  />
+                </div>
               </div>
             </div>
           </div>

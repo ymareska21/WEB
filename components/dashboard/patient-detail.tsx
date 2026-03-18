@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -239,7 +240,7 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
   return (
     <div className="p-6 space-y-6">
       {/* Patient summary header */}
-      <div className="flex items-center justify-between bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4">
+      <div className="flex items-center justify-between bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4 shadow-sm">
         <div className="flex items-center gap-4">
           <Avatar className="h-16 w-16 bg-accent">
             <AvatarFallback className="text-white text-lg font-semibold">
@@ -258,19 +259,31 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
         </div>
       </div>
 
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList className="bg-muted">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="activity">Activity Log</TabsTrigger>
-        </TabsList>
+      <Card className="border-0 shadow">
+        <CardContent className="p-4 sm:p-6">
+          <Tabs defaultValue="overview" className="space-y-4">
+            <TabsList className="bg-muted">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="activity">Activity Log</TabsTrigger>
+            </TabsList>
 
-        <TabsContent value="overview" className="space-y-6">
-          {/* Top Metrics */}
-          <div className="grid grid-cols-3 gap-4">
-            <Card className="bg-gradient-to-r from-green-50 to-green-100">
+            <TabsContent value="overview" className="space-y-6">
+              {/* Top Metrics */}
+          <div className="grid grid-cols-6 gap-4">
+            <Card className="col-span-6 bg-gradient-to-r from-green-20 to-green-100">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Overall Health Grade: {patient.grade}
+                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center justify-between">
+                  <span>Overall Health Grade</span>
+                  <Badge
+                    variant="outline"
+                    className={cn('font-semibold', {
+                      'bg-green-100 text-green-800 border-green-200': patient.grade === 'Excellent',
+                      'bg-blue-100 text-blue-800 border-blue-200': patient.grade === 'Good',
+                      'bg-yellow-100 text-yellow-800 border-yellow-200': patient.grade === 'Fair',
+                    })}
+                  >
+                    {patient.grade}
+                  </Badge>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -285,7 +298,7 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="col-span-2 border-0 shadow">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   Duration
@@ -298,7 +311,7 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="col-span-2 border-0 shadow">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   Breaks
@@ -310,11 +323,8 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
                 </div>
               </CardContent>
             </Card>
-          </div>
 
-          {/* Additional Metrics */}
-          <div className="grid grid-cols-3 gap-4">
-            <Card>
+            <Card className="col-span-2 border-0 shadow">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   Distance
@@ -325,7 +335,7 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="col-span-3 border-0 shadow">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   Strain Events (7 days)
@@ -336,7 +346,7 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="col-span-3 border-0 shadow">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   Blink Rate & Viewing Distance
@@ -349,7 +359,7 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
           </div>
 
           {/* Charts */}
-          <Card>
+          <Card className="border-0 shadow">
             <CardHeader>
               <CardTitle className="text-lg font-semibold">7-Day Compliance Trends</CardTitle>
               <CardDescription>Blink Rate & Viewing Distance</CardDescription>
@@ -375,7 +385,7 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-0 shadow">
             <CardHeader>
               <CardTitle className="text-lg font-semibold">Daily Screen Time & Breaks Taken</CardTitle>
             </CardHeader>
@@ -396,7 +406,7 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-0 shadow">
             <CardHeader>
               <CardTitle className="text-lg font-semibold">Eye Health Score Trend</CardTitle>
             </CardHeader>
@@ -422,7 +432,7 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
           </Card>
 
           {/* Send Recommendations */}
-          <Card>
+          <Card className="border-0 shadow">
             <CardHeader>
               <CardTitle>Send Recommendations to Patient</CardTitle>
             </CardHeader>
@@ -433,43 +443,45 @@ export default function PatientDetail({ patientId }: PatientDetailProps) {
                 Send Personalized Health Plan
               </Button>
             </CardContent>
-          </Card>
-        </TabsContent>
+              </Card>
+            </TabsContent>
 
-        <TabsContent value="activity" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Patient interaction history</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex gap-4 pb-4 border-b border-border">
-                  <Eye className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="font-medium">Eye Exam Completed</p>
-                    <p className="text-sm text-muted-foreground">August 1, 2025</p>
+            <TabsContent value="activity" className="space-y-6">
+              <Card className="border-0 shadow">
+                <CardHeader>
+                  <CardTitle>Recent Activity</CardTitle>
+                  <CardDescription>Patient interaction history</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex gap-4 pb-4 border-b border-border">
+                      <Eye className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
+                      <div>
+                        <p className="font-medium">Eye Exam Completed</p>
+                        <p className="text-sm text-muted-foreground">August 1, 2025</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-4 pb-4 border-b border-border">
+                      <Activity className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
+                      <div>
+                        <p className="font-medium">Health Metrics Updated</p>
+                        <p className="text-sm text-muted-foreground">July 31, 2025</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-4">
+                      <Clock className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
+                      <div>
+                        <p className="font-medium">Compliance Report Sent</p>
+                        <p className="text-sm text-muted-foreground">July 29, 2025</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="flex gap-4 pb-4 border-b border-border">
-                  <Activity className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="font-medium">Health Metrics Updated</p>
-                    <p className="text-sm text-muted-foreground">July 31, 2025</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <Clock className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="font-medium">Compliance Report Sent</p>
-                    <p className="text-sm text-muted-foreground">July 29, 2025</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
     </div>
   );
 }
