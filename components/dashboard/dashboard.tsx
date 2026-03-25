@@ -53,7 +53,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
       <main className="flex gap-6 p-6 rounded-r-3xl">
         {/* Left Sidebar - Patient List */}
-        <aside className="w-80 border border-border bg-white overflow-y-auto max-h-[calc(100vh-69px-3rem)] rounded-3xl shadow-sm">
+        <aside className="w-80 border border-border bg-white overflow-y-auto max-h-[calc(100vh-69px-3rem)] rounded-3xl shadow-sm [&::-webkit-scrollbar]:hidden">
           <div className="p-6 space-y-4 sticky top-0 bg-white border-b border-border z-40 backdrop-blur-xl">
             <div>
               <h2 className="text-lg font-semibold mb-2">Patients</h2>
